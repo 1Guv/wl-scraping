@@ -1,13 +1,25 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { ScrapeService } from './services/scrape.service';
+import { of } from 'rxjs';
 
 describe('AppComponent', () => {
+
+  const spyScrapeService = jasmine.createSpyObj(
+    ScrapeService,
+    ['get', 'scrapeWebsite']
+  );
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
         AppComponent
       ],
+      providers: [
+        { provide:  ScrapeService, useValue: spyScrapeService }
+      ]
     }).compileComponents();
+    spyScrapeService.scrapeWebsite.and.returnValue(of([]));
   });
 
   it('should create the app', () => {
@@ -26,6 +38,6 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('wl-test app is running!');
+    expect(compiled.querySelector('h1')?.textContent).toContain('WL-TEST');
   });
 });
