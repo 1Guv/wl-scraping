@@ -58,7 +58,6 @@ export class AppComponent implements OnInit, OnDestroy{
     if (!!tag && tag) {
       arrTextContent = Array.from(html.querySelectorAll(tag));
     }
-
     return arrTextContent.map((el: any) => el.textContent);
   }
 
